@@ -7,7 +7,7 @@
 
     <!-- Notification for Add to Cart Success -->
     <div id="cart-success-toast"
-        class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full opacity-0 z-50 flex items-center">
+        class="fixed top-4 right-4 bg-green-400 text-white px-4 py-3 rounded-lg shadow-lg transform transition-all duration-200 translate-x-full opacity-0 z-50 flex items-center">
         <div class="mr-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -17,6 +17,9 @@
             <p id="cart-success-message" class="font-medium"></p>
             <p class="text-sm" id="cart-item-count"></p>
         </div>
+        <button id="close-toast" class="ml-4 text-white focus:outline-none hover:text-gray-200">
+            ✕
+        </button>
     </div>
 
 
@@ -39,24 +42,12 @@
         </div>
     </div>
 
-    {{-- <div id="product-list" class="grid grid-cols-3 gap-4 mt-4">
-        @foreach($products as $product)
-        <div class="border p-4 rounded shadow product-card">
-            <h2 class="text-lg font-bold">{{ $product['name'] }}</h2>
-            <p>{{ $product['price'] }}</p>
-            <button class="mt-2 bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700 add-to-cart-btn"
-                data-id="{{ $product['id'] }}">
-                <i class="fas fa-shopping-cart"></i> Add To Cart
-            </button>
-        </div>
-        @endforeach
-    </div> --}}
     <!-- Product Card Container -->
     <div id="product-list"
         class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         @foreach ($products as $product)
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                <img src="{{ asset('image/water.png') }}" alt={{ $product['name'] }} class="w-full h-48 object-cover">
+                <img src="{{ asset('image/product.webp') }}" alt={{ $product['name'] }} class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold">{{ $product['name'] }}</h3>
                     <p class="text-gray-600">${{ $product['price'] }}</p>
