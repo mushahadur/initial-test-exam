@@ -9,83 +9,86 @@ class ProductController extends Controller
     private $products = [
         [
             'id' => 1,
-            'name' => 'Product A',
-            'price' => 100,
+            'name' => 'Fountain Pen',
+            'price' => 25,
         ],
         [
             'id' => 2,
-            'name' => 'Product B',
-            'price' => 200,
+            'name' => 'Smartphone',
+            'price' => 699,
         ],
         [
             'id' => 3,
-            'name' => 'Product C',
-            'price' => 300,
+            'name' => 'Digital Watch',
+            'price' => 150,
         ],
         [
             'id' => 4,
-            'name' => 'Product D',
-            'price' => 400,
+            'name' => 'Laptop Computer',
+            'price' => 1200,
         ],
         [
             'id' => 5,
-            'name' => 'Product E',
-            'price' => 500,
+            'name' => 'Water Heater',
+            'price' => 350,
         ],
         [
             'id' => 6,
-            'name' => 'Product F',
-            'price' => 600,
+            'name' => 'Wireless Earbuds',
+            'price' => 89,
         ],
         [
             'id' => 7,
-            'name' => 'Product G',
-            'price' => 700,
+            'name' => 'Coffee Maker',
+            'price' => 120,
         ],
         [
             'id' => 8,
-            'name' => 'Product H',
-            'price' => 800,
+            'name' => 'Desk Lamp',
+            'price' => 45,
         ],
         [
             'id' => 9,
-            'name' => 'Product I',
-            'price' => 900,
+            'name' => 'Bluetooth Speaker',
+            'price' => 79,
         ],
-
         [
             'id' => 10,
-            'name' => 'Product J',
-            'price' => 900,
+            'name' => 'Fitness Tracker',
+            'price' => 129,
         ],
-
         [
             'id' => 11,
-            'name' => 'Product K',
-            'price' => 900,
+            'name' => 'Electric Kettle',
+            'price' => 59,
         ],
-
         [
             'id' => 12,
-            'name' => 'Product L',
-            'price' => 900,
+            'name' => 'Backpack',
+            'price' => 65,
         ],
     ];
 
-    public function index(Request $request)
-{
-    $search = $request->input('search');
 
-    if ($search) {
-        // Filter products by name
-        $products = collect($this->products)->filter(function($product) use ($search) {
-            return stripos($product['name'], $search) !== false;
-        })->values()->all();
-    } else {
+    public function index(Request $request)
+    {
+        $query = $request->input('search'); // Get search query from request
+
         $products = $this->products;
+
+        if ($query) {
+            $products = collect($this->products)->filter(function ($product) use ($query) {
+                return stripos($product['name'], $query) !== false;
+            })->toArray();
+        }
+
+        // Check if request is AJAX
+        if ($request->ajax()) {
+            return response()->json(['products' => array_values($products)]);
+        }
+
+        return view('pages.products.index', ['products' => $products]);
     }
 
-    return view('pages.products.index', ['products' => $products]);
-}
 
 }

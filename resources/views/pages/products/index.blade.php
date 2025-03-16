@@ -30,8 +30,7 @@
 
                 <!-- Search Bar -->
                 <div class="relative w-full md:w-64">
-                    <input
-                    id="product-search"
+                    <input id="search-input"
                         class="border text-gray-900 placeholder:text-gray-900 rounded-md py-2 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-teal-600"
                         placeholder="Search..." type="text" />
                     <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
@@ -40,8 +39,21 @@
         </div>
     </div>
 
-    {{-- Products Cards --}}
-    <div class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+    {{-- <div id="product-list" class="grid grid-cols-3 gap-4 mt-4">
+        @foreach($products as $product)
+        <div class="border p-4 rounded shadow product-card">
+            <h2 class="text-lg font-bold">{{ $product['name'] }}</h2>
+            <p>{{ $product['price'] }}</p>
+            <button class="mt-2 bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700 add-to-cart-btn"
+                data-id="{{ $product['id'] }}">
+                <i class="fas fa-shopping-cart"></i> Add To Cart
+            </button>
+        </div>
+        @endforeach
+    </div> --}}
+    <!-- Product Card Container -->
+    <div id="product-list"
+        class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         @foreach ($products as $product)
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
                 <img src="{{ asset('image/water.png') }}" alt={{ $product['name'] }} class="w-full h-48 object-cover">
@@ -61,6 +73,8 @@
 
 
     </div>
+
+
     <div class="text-center py-8">
         <button class="mt-2 bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600">Show More</button>
     </div>
@@ -69,6 +83,51 @@
             <p class="text-gray-800 text-bold">No products available.</p>
         </div>
     @endif
+
+
+    <script>
+        document.getElementById("search-input").addEventListener("keyup", function () {
+            let searchValue = this.value;
+
+            fetch(`{{ route('products.index') }}?search=${searchValue}`, {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    let productList = document.getElementById("product-list");
+                    productList.innerHTML = ""; // Clear previous products
+
+                    if (data.products.length === 0) {
+                        productList.innerHTML = "<p>No products found</p>";
+                        return;
+                    }
+
+                    data.products.forEach(product => {
+                        let productCard = `
+                                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <img src="{{ asset('image/water.png') }}" alt="Product name" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold">${product.name}</h3>
+                            <p class="text-gray-600">$ ${product.price}</p>
+                            <div class="mt-4 flex justify-end">
+                                <button class="add-to-cart-btn mt-2 bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700"
+                                    data-id="${product.id}" data-name="${product.name}"
+                                    data-price="${product.price}">
+                                    <i class="fas fa-shopping-cart"></i> Add To Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                            `;
+                        productList.innerHTML += productCard;
+                    });
+                })
+                .catch(error => console.error("Error fetching products:", error));
+        });
+    </script>
+
 
     @section('scripts')
         <script>
@@ -82,7 +141,6 @@
                         const productId = this.getAttribute('data-id');
                         const productName = this.getAttribute('data-name');
                         const productPrice = this.getAttribute('data-price');
-
                         // Send AJAX request to add product to cart
                         fetch(`/cart/add/${productId}`, {
                             method: 'POST',
