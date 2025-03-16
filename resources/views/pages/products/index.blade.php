@@ -4,7 +4,6 @@
 @endsection
 
 @section('content')
-
     <!-- Notification -->
     <div id="cart-success-toast"
         class="fixed top-4 right-4 bg-green-400 text-white px-4 py-3 rounded-lg shadow-lg transform transition-all duration-200 translate-x-full opacity-0 z-50 flex items-center">
@@ -21,8 +20,6 @@
             ✕
         </button>
     </div>
-
-
     <!-- Page Title -->
     <div class="bg-teal-500 text-white py-5 mt-2">
         <div class="container mx-auto px-4">
@@ -40,7 +37,6 @@
             </div>
         </div>
     </div>
-
     <!-- Product Card Container -->
     <div id="product-list"
         class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -60,11 +56,7 @@
                 </div>
             </div>
         @endforeach
-
-
     </div>
-
-
     <div class="text-center py-8">
         <button class="mt-2 bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600">Show More</button>
     </div>
@@ -73,7 +65,6 @@
             <p class="text-gray-800 text-bold">No products available.</p>
         </div>
     @endif
-
 
     <script>
         document.getElementById("search-input").addEventListener("keyup", function () {
@@ -117,7 +108,6 @@
                 .catch(error => console.error("Error fetching products:", error));
         });
     </script>
-
 
     @section('scripts')
         <script>
@@ -180,5 +170,4 @@
             });
         </script>
     @endsection
-
 @endsection

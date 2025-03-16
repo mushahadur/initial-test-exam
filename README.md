@@ -25,16 +25,16 @@ This project aims to develop a streamlined product catalog with a shopping cart 
 ### Use of Technology <a name="technology"></a>
 
 1. Backend:
-  - - Laravel (latest stable version).
-  - - Use a hardcoded array of products (no database needed).
+   - Laravel (latest stable version).
+   - Use a hardcoded array of products (no database needed).
 
 2. Frontend:
-  - - Use Blade templates for server-side rendering.
-  - - Add JavaScript for dynamic cart updates (e.g., updating the total when a product is added/removed).
+   - Use Blade templates for server-side rendering.
+   - Add JavaScript for dynamic cart updates (e.g., updating the total when a product is added/removed).
 
 3. Discount Logic:
-  - - Implement the discount logic in JavaScript or PHP (candidate's choice).
-  - - Ensure the discount is calculated and displayed correctly.
+   - Implement the discount logic in JavaScript or PHP (candidate's choice).
+   - Ensure the discount is calculated and displayed correctly.
 
 <br>
 <br>
@@ -47,37 +47,37 @@ This project aims to develop a streamlined product catalog with a shopping cart 
 1. Product Listing:
 
 - Display a list of products with:
-  - - Name
-  - - Price (in USD)
-  - - Add to Cart button.
+   - Name
+   - Price (in USD)
+   - Add to Cart button.
 
 2. Shopping Cart:
-  - - Users can add/remove products to/from their cart.
-  - - Use session storage to persist the cart (no database needed).
-  - - Display the cart total dynamically using JavaScript.
+   - Users can add/remove products to/from their cart.
+   - Use session storage to persist the cart (no database needed).
+   - Display the cart total dynamically using JavaScript.
 
 3. Discount Logic:
 #### Implement a custom discount system where:
-  - - If a user adds 3 or more products to the cart, they get a 10% discount.
-  - - The discount should be applied dynamically and reflected in the cart total.
+   - If a user adds 3 or more products to the cart, they get a 10% discount.
+   - The discount should be applied dynamically and reflected in the cart total.
 <br>
 <br>
 
 <hr>
 
-### Use of Technology <a name="technology"></a>
+### Technical Requirements <a name="technology"></a>
 
 1. Backend:
-  - - Laravel (latest stable version).
-  - - Use a hardcoded array of products (no database needed).
+   - Laravel (latest stable version).
+   - Use a hardcoded array of products (no database needed).
 
 2. Frontend:
-  - - Use Blade templates for server-side rendering.
-  - - Add JavaScript for dynamic cart updates (e.g., updating the total when a product is added/removed).
+   - Use Blade templates for server-side rendering.
+   - Add JavaScript for dynamic cart updates (e.g., updating the total when a product is added/removed).
 
 3. Discount Logic:
-  - - Implement the discount logic in JavaScript or PHP (candidate's choice).
-  - - Ensure the discount is calculated and displayed correctly.
+   - Implement the discount logic in JavaScript or PHP (candidate's choice).
+   - Ensure the discount is calculated and displayed correctly.
 
 <br>
 <br>

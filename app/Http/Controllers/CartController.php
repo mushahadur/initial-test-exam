@@ -66,7 +66,7 @@ class CartController extends Controller
 
         if (isset($cart[$index])) {
             unset($cart[$index]);
-            session()->put('cart', array_values($cart)); 
+            session()->put('cart', array_values($cart));
         }
 
         return redirect()->route('cart')->with('success', 'Item removed from cart!');
