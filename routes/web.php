@@ -7,6 +7,8 @@ use App\Http\Controllers\ProductController;
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/search', [ProductController::class, 'search'])->name('products.search');
 
-Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::delete('/cart/remove/{index}', [CartController::class, 'remove'])->name('cart.remove');
+Route::prefix('cart')->controller(CartController::class)->group(function () {
+    Route::post('/add/{id}', 'addToCart')->name('cart.add');
+    Route::get('/', 'index')->name('cart');
+    Route::delete('/remove/{index}', 'remove')->name('cart.remove');
+});

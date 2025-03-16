@@ -103,7 +103,7 @@ Shopping Cart
                                         </div>
                                     </div>
 
-                                    <!-- Discount info box -->
+                                    <!-- Discount info -->
                                     <div class="mt-6 bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 rounded">
                                         <p class="font-bold">Discount Information</p>
                                         <p class="text-xs">Add 3 or more items to your cart and get a 10% discount!</p>

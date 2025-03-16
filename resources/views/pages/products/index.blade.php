@@ -5,7 +5,7 @@
 
 @section('content')
 
-    <!-- Notification for Add to Cart Success -->
+    <!-- Notification -->
     <div id="cart-success-toast"
         class="fixed top-4 right-4 bg-green-400 text-white px-4 py-3 rounded-lg shadow-lg transform transition-all duration-200 translate-x-full opacity-0 z-50 flex items-center">
         <div class="mr-2">
@@ -31,7 +31,6 @@
                     <h1 class="text-3xl md:text-4xl font-bold">Product List</h1>
                 </div>
 
-                <!-- Search Bar -->
                 <div class="relative w-full md:w-64">
                     <input id="search-input"
                         class="border text-gray-900 placeholder:text-gray-900 rounded-md py-2 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-teal-600"
@@ -88,7 +87,7 @@
                 .then(response => response.json())
                 .then(data => {
                     let productList = document.getElementById("product-list");
-                    productList.innerHTML = ""; // Clear previous products
+                    productList.innerHTML = "";
 
                     if (data.products.length === 0) {
                         productList.innerHTML = "<p>No products found</p>";
@@ -123,16 +122,13 @@
     @section('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                // Get all "Add To Cart" buttons
                 const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-
-                // Add click event listener to each button
                 addToCartButtons.forEach(button => {
                     button.addEventListener('click', function () {
                         const productId = this.getAttribute('data-id');
                         const productName = this.getAttribute('data-name');
                         const productPrice = this.getAttribute('data-price');
-                        // Send AJAX request to add product to cart
+
                         fetch(`/cart/add/${productId}`, {
                             method: 'POST',
                             headers: {
@@ -147,29 +143,23 @@
                             .then(response => response.json())
                             .then(data => {
                                 if (data.success) {
-                                    // Get the toast element
                                     const toast = document.getElementById('cart-success-toast');
                                     const successMessage = document.getElementById('cart-success-message');
                                     const itemCount = document.getElementById('cart-item-count');
 
-                                    // Update message to include product name
                                     successMessage.textContent = `${productName} added to cart!`;
 
-                                    // Update item count message
                                     if (data.discount_applied) {
                                         itemCount.textContent = `Cart (${data.cart_count}) - 10% discount applied!`;
                                     } else {
                                         itemCount.textContent = `Cart (${data.cart_count})`;
                                     }
 
-                                    // Show the toast
                                     toast.classList.remove('translate-x-full', 'opacity-0');
                                     toast.classList.add('translate-x-0', 'opacity-100');
 
-                                    // Update cart count in header
                                     updateCartCountDisplay(data.cart_count);
 
-                                    // Hide toast after 3 seconds
                                     setTimeout(() => {
                                         toast.classList.remove('translate-x-0', 'opacity-100');
                                         toast.classList.add('translate-x-full', 'opacity-0');

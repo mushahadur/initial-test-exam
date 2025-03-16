@@ -72,7 +72,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $query = $request->input('search'); // Get search query from request
+        $query = $request->input('search');
 
         $products = $this->products;
 
@@ -82,7 +82,6 @@ class ProductController extends Controller
             })->toArray();
         }
 
-        // Check if request is AJAX
         if ($request->ajax()) {
             return response()->json(['products' => array_values($products)]);
         }
