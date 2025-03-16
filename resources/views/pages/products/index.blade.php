@@ -1,83 +1,145 @@
-<!-- resources/views/pages/welcome.blade.php -->
 @extends('layouts.app')
 @section('title')
-Home Page
+    Product List Page
 @endsection
 
 @section('content')
-<div class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-    <!-- Product Card 1 -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src="https://placehold.co/300x200" alt="Placeholder image of a product" class="w-full h-48 object-cover">
-        <div class="p-4">
-            <h3 class="text-lg font-bold">Product Name 1</h3>
-            <p class="text-gray-600">$19.99</p>
-            <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add To Cart</button>
+
+    <!-- Notification for Add to Cart Success -->
+    <div id="cart-success-toast"
+        class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full opacity-0 z-50 flex items-center">
+        <div class="mr-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+        </div>
+        <div>
+            <p id="cart-success-message" class="font-medium"></p>
+            <p class="text-sm" id="cart-item-count"></p>
         </div>
     </div>
-    <!-- Product Card 2 -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src="https://placehold.co/300x200" alt="Placeholder image of a product" class="w-full h-48 object-cover">
-        <div class="p-4">
-            <h3 class="text-lg font-bold">Product Name 2</h3>
-            <p class="text-gray-600">$29.99</p>
-            <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add To Cart</button>
+
+
+    <!-- Page Title -->
+    <div class="bg-teal-500 text-white py-5 mt-2">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="text-center md:text-left mb-4 md:mb-0">
+                    <h1 class="text-3xl md:text-4xl font-bold">Product List</h1>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="relative w-full md:w-64">
+                    <input
+                    id="product-search"
+                        class="border text-gray-900 placeholder:text-gray-900 rounded-md py-2 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-teal-600"
+                        placeholder="Search..." type="text" />
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Product Card 3 -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src="https://placehold.co/300x200" alt="Placeholder image of a product" class="w-full h-48 object-cover">
-        <div class="p-4">
-            <h3 class="text-lg font-bold">Product Name 3</h3>
-            <p class="text-gray-600">$39.99</p>
-            <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add To Cart</button>
-        </div>
+
+    {{-- Products Cards --}}
+    <div class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        @foreach ($products as $product)
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="{{ asset('image/water.png') }}" alt={{ $product['name'] }} class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-bold">{{ $product['name'] }}</h3>
+                    <p class="text-gray-600">${{ $product['price'] }}</p>
+                    <div class="mt-4 flex justify-end">
+                        <button class="add-to-cart-btn mt-2 bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700"
+                            data-id="{{ $product['id'] }}" data-name="{{ $product['name'] }}"
+                            data-price="{{ $product['price'] }}">
+                            <i class="fas fa-shopping-cart"></i> Add To Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
+
     </div>
-    <!-- Product Card 4 -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src="https://placehold.co/300x200" alt="Placeholder image of a product" class="w-full h-48 object-cover">
-        <div class="p-4">
-            <h3 class="text-lg font-bold">Product Name 4</h3>
-            <p class="text-gray-600">$49.99</p>
-            <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add To Cart</button>
-        </div>
+    <div class="text-center py-8">
+        <button class="mt-2 bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600">Show More</button>
     </div>
-    <!-- Product Card 5 -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src="https://placehold.co/300x200" alt="Placeholder image of a product" class="w-full h-48 object-cover">
-        <div class="p-4">
-            <h3 class="text-lg font-bold">Product Name 5</h3>
-            <p class="text-gray-600">$59.99</p>
-            <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add To Cart</button>
+    @if (count($products) === 0)
+        <div class="text-center py-8">
+            <p class="text-gray-800 text-bold">No products available.</p>
         </div>
-    </div>
-    <!-- Product Card 6 -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src="https://placehold.co/300x200" alt="Placeholder image of a product" class="w-full h-48 object-cover">
-        <div class="p-4">
-            <h3 class="text-lg font-bold">Product Name 6</h3>
-            <p class="text-gray-600">$69.99</p>
-            <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add To Cart</button>
-        </div>
-    </div>
-    <!-- Product Card 7 -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src="https://placehold.co/300x200" alt="Placeholder image of a product" class="w-full h-48 object-cover">
-        <div class="p-4">
-            <h3 class="text-lg font-bold">Product Name 7</h3>
-            <p class="text-gray-600">$79.99</p>
-            <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add To Cart</button>
-        </div>
-    </div>
-    <!-- Product Card 8 -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src="https://placehold.co/300x200" alt="Placeholder image of a product" class="w-full h-48 object-cover">
-        <div class="p-4">
-            <h3 class="text-lg font-bold">Product Name 8</h3>
-            <p class="text-gray-600">$89.99</p>
-            <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add To Cart</button>
-        </div>
-    </div>
-    
-</div>
+    @endif
+
+    @section('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get all "Add To Cart" buttons
+                const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+                // Add click event listener to each button
+                addToCartButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const productId = this.getAttribute('data-id');
+                        const productName = this.getAttribute('data-name');
+                        const productPrice = this.getAttribute('data-price');
+
+                        // Send AJAX request to add product to cart
+                        fetch(`/cart/add/${productId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                name: productName,
+                                price: productPrice
+                            })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    // Get the toast element
+                                    const toast = document.getElementById('cart-success-toast');
+                                    const successMessage = document.getElementById('cart-success-message');
+                                    const itemCount = document.getElementById('cart-item-count');
+
+                                    // Update message to include product name
+                                    successMessage.textContent = `${productName} added to cart!`;
+
+                                    // Update item count message
+                                    if (data.discount_applied) {
+                                        itemCount.textContent = `Cart (${data.cart_count}) - 10% discount applied!`;
+                                    } else {
+                                        itemCount.textContent = `Cart (${data.cart_count})`;
+                                    }
+
+                                    // Show the toast
+                                    toast.classList.remove('translate-x-full', 'opacity-0');
+                                    toast.classList.add('translate-x-0', 'opacity-100');
+
+                                    // Update cart count in header
+                                    updateCartCountDisplay(data.cart_count);
+
+                                    // Hide toast after 3 seconds
+                                    setTimeout(() => {
+                                        toast.classList.remove('translate-x-0', 'opacity-100');
+                                        toast.classList.add('translate-x-full', 'opacity-0');
+                                    }, 3000);
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                    });
+                });
+
+                // Function to update cart count display
+                function updateCartCountDisplay(count) {
+                    const cartCountElement = document.getElementById('cart-count');
+                    if (cartCountElement) {
+                        cartCountElement.textContent = `(${count.toString().padStart(2, '0')})`;
+                    }
+                }
+            });
+        </script>
+    @endsection
+
 @endsection
